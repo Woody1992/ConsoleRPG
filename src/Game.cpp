@@ -6,15 +6,18 @@
 Game::Game()
 {
     quit = false;
+    this->currentState = nullptr;
+
+    this->character = new Character("PogSon");
 }
 
 Game::~Game()
 {
-
+    delete this->character;
 }
 
 // Accessors
-bool Game::getQuit()
+const bool& Game::getQuit() const
 {
     return this->quit;
 }
@@ -22,10 +25,8 @@ bool Game::getQuit()
 // Modifier
 
 // Functions
-void Game::update()
+void Game::updateMenu()
 {
-    this->printMenu();
-
     switch (this->getChoice())
     {
         case 0:
@@ -34,6 +35,7 @@ void Game::update()
             break;
         case 1:
             std::cout << "--- Character Stats --- " << "\n";
+            std::cout << this->character->toString() << "\n" << "\n";
             break;
         case 2:
             std::cout << "--- Inventory --- " << "\n";
@@ -43,15 +45,21 @@ void Game::update()
             break;
     }
 }
+void Game::update()
+{
+    this->printMenu();
 
-int Game::getChoice() {
+    this->updateMenu();
+}
+
+const int Game::getChoice() const {
     int choice = 0;
     std::cout << "Enter choice: ";
     std::cin >> choice;
     return choice;
 }
 
-void Game::printMenu() {
+void Game::printMenu() const {
     std::cout << "--- MAIN MENU ---" << "\n"
               << "(0) Exit game"<< "\n"
               << "(1) Character Stats" << "\n"

@@ -3,4 +3,4 @@ project(RPG)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(RPG src/main.cpp src/Game.cpp src/Game.h src/State.cpp src/State.h)
+add_executable(RPG src/main.cpp src/Game.cpp src/Game.h src/State.cpp src/State.h src/Character.cpp src/Character.h)

@@ -4,11 +4,13 @@
 
 #include "State.h"
 
-State::State() {
-
+State::State()
+{
+    this ->quit = false;
 }
 
-State::~State() {
+State::~State()
+{
 
 }
 
