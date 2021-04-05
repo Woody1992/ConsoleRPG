@@ -6,14 +6,21 @@
 Game::Game()
 {
     quit = false;
-    this->currentState = nullptr;
 
     this->character = new Character("PogSon");
+
+    this->states.push(new GameState(this->character, &this->states));
 }
 
 Game::~Game()
 {
     delete this->character;
+
+    while (!this->states.empty())
+    {
+        delete this->states.top();
+        this->states.pop();
+    }
 }
 
 // Accessors
@@ -25,48 +32,16 @@ const bool& Game::getQuit() const
 // Modifier
 
 // Functions
-void Game::updateMenu()
-{
-    switch (this->getChoice())
-    {
-        case 0:
-            std::cout << "--- GOODBYE --- " << "\n";
-            this->quit = true;
-            break;
-        case 1:
-            std::cout << "--- Character Stats --- " << "\n";
-            std::cout << this->character->toString() << "\n" << "\n";
-            break;
-        case 2:
-            std::cout << "--- Inventory --- " << "\n";
-            break;
-        default:
-            std::cout << "--- Wrong Option --- " << "\n";
-            break;
-    }
-}
 void Game::update()
 {
-    this->printMenu();
+    this->states.top()->update();
+    if (this->states.top()->getQuit())
+    {
+        delete this->states.top();
+        this->states.pop();
+    }
 
-    this->updateMenu();
+
+    if(this->states.empty())
+        this->quit = true;
 }
-
-const int Game::getChoice() const {
-    int choice = 0;
-    std::cout << "Enter choice: ";
-    std::cin >> choice;
-    return choice;
-}
-
-void Game::printMenu() const {
-    std::cout << "--- MAIN MENU ---" << "\n"
-              << "(0) Exit game"<< "\n"
-              << "(1) Character Stats" << "\n"
-              << "(2) Inventory" << "\n"
-              << "(3) Shop" << "\n"
-              << "(4) Travel" << "\n"
-              << "(5) Rest" << "\n";
-}
-
-

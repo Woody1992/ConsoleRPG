@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <cmath>
 
 class Character
 {
@@ -17,21 +18,16 @@ private:
     int level;
     int exp;
     int expNext;
+    int skillPoints;
 
+
+    //Stars
     int hp;
     int hpMax;
     int mana;
     int manaMax;
     int stamina;
     int staminaMax;
-
-    int defence;
-    float dodgeChance;
-    float hitChance;
-    float critChance;
-    float magicFind;
-
-    int gold;
 
     // Attributes
     int strength;
@@ -40,12 +36,27 @@ private:
     int dexterity; // ловкость
     int intelligence;
 
+    int defence;
+    float dodgeChance;
+    float hitRating;
+    float critChance;
+    float magicFind;
 
+    int gold;
+
+
+
+    //Functions
+    void updateSkills();
 
 public:
     Character(std::string name);
     virtual ~Character();
 
+
+    //Functions
+    bool canLevelUp();
+    const std::string getMenuBar();
     const std::string toString(); // set variables in strings
 };
 

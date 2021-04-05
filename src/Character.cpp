@@ -5,37 +5,48 @@
 #include "Character.h"
 
 
+// Private Functions
+void Character::updateSkills()
+{
+
+    this->hpMax = this->vitality * 10;
+    this->hp = this->hpMax;
+    this->staminaMax=this->agility*2;
+    this->stamina=this->staminaMax;
+    this->manaMax=this->intelligence * 10;
+    this->mana=this->manaMax;
+
+
+
+    this->defence= this->agility;
+    this->dodgeChance= static_cast<float>(this->agility)/50;
+    this->hitRating=this->dexterity * 2;
+    this->critChance=static_cast<float>(this->dexterity)/60;
+    this->magicFind=static_cast<float>(this->intelligence)/70;
+
+
+
+
+}
+
+// Constructors and Destructors
 Character::Character(std::string name)
 {
     this->name = name;
     this->level = 1;
-    this->exp = 0;
-    this->expNext = 100;
-
-    this->hp = 100;
-    this->hpMax = 100;
-    this->mana=100;
-    this->manaMax=100;
-    this->stamina=10;
-    this->staminaMax=10;
-
-    this->defence=1;
-    this->dodgeChance=1.f;
-    this->hitChance=1.f;
-    this->critChance=1.f;
-    this->magicFind=1.f;
-
-    this->gold = 0;
+    this->exp = 1000;
+    this->expNext =46;
+    this->skillPoints = 0;
 
     this->strength = 1;
     this->vitality = 1;
     this->agility = 1;
     this->dexterity = 1;
-    this->intelligence = 1.f;
+    this->intelligence = 1;
 
+    this->gold = 0;
 
-    // Init attr and stats
-
+    this->updateSkills();
 }
 
 Character::~Character()
@@ -45,6 +56,38 @@ Character::~Character()
 
 
 // Functions
+
+bool Character::canLevelUp()
+{
+    if (this->exp >= this->expNext)
+    {
+        this->level++;
+        this->exp -= this->expNext;
+        this->expNext = (50 / 3) * (pow(this->level, 3) - 6 * pow(this->level, 2) + (this->level * 17) - 12);
+        this->skillPoints++;
+
+        return true;
+    }
+
+    return false;
+}
+
+const std::string Character::getMenuBar()
+{
+    std::stringstream ss;
+
+    ss
+        << "Name: " << this->name << " |"
+        << " Level: " << this->level << " |"
+        << " Exp: " << this->exp << "/"<< this->expNext << " |"
+        << " Health: " << this->hp << "/" << this->hpMax << " |"
+        << " Stamina: " << this->stamina << "/" << this->staminaMax << "\n"
+        << "Skill points available: " << this->skillPoints;
+
+    return ss.str();
+
+}
+
 const std::string Character::toString() // set variables in strings
 {
     std::stringstream ss;
@@ -65,10 +108,10 @@ const std::string Character::toString() // set variables in strings
 
        << "Defence: " << this->defence << "\n"
        << "Dodge chance: " << this->dodgeChance << "\n"
-       << "Hit chance: " << this->hitChance << "\n"
+       << "Hit rating: " << this->hitRating << "\n"
        << "Crit chance: " << this->critChance << "\n"
        << "Magic Find: " << this->magicFind << "\n"
-       << "Gold: " << this->gold << "\n"
-       << "\n";
+
+       << "Gold: " << this->gold << "\n";
     return ss.str();
 }

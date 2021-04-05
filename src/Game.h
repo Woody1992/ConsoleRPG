@@ -5,17 +5,19 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <stack>
 #include "State.h"
 #include "Character.h"
+#include "States/GameState.h"
+
 
 
 class Game
 {
 private:
     bool quit;
-    std::vector<State> states;
-    State* currentState;
-
+    std::stack<State*> states;
 
     Character* character;
 public:
@@ -27,9 +29,6 @@ public:
     const bool& getQuit() const;
 
     // Functions
-    void printMenu() const;
-    const int getChoice() const;
-    void updateMenu();
     void update();
 };
 
