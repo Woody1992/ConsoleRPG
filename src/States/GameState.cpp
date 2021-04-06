@@ -20,7 +20,7 @@ void GameState::updateMenu()
 {
     switch (this->getChoice())
     {
-        case 0:
+        case -1:
             this->setQuit(true);
             break;
         case 1:
@@ -29,6 +29,9 @@ void GameState::updateMenu()
             break;
         case 2:
 
+            break;
+        case 3:
+            this->states->push(new TravelMenuState(this->character, this->states));
             break;
         default:
             std::cout << " --- Wrong Option --- " << "\n";
@@ -44,7 +47,7 @@ void GameState::printMenu() const
     std::cout
             << "--- GAME MENU ---" << "\n" << "\n"
             << this->character->getMenuBar()<< "\n" << "\n"
-            << "(0) Quit to main menu"<< "\n"
+            << "(-1) Quit to main menu"<< "\n"
             << "(1) Character Menu" << "\n"
             << "(2) Shop menu" << "\n"
             << "(3) Travel menu" << "\n"

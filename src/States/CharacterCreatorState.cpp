@@ -45,7 +45,7 @@ void CharacterCreatorState::printMenu()
 {
     std::cout << " --- Character Creator ---" << "\n" << "\n"
          << " Characters: " << std::to_string(this->characterList->size()) << " / " << std::to_string(this->maxCharacters) << "\n" << "\n"
-         << " (0) Back to menu" << "\n"
+         << " (-1) Back to menu" << "\n"
          << " (1) New Character" << "\n" << "\n";
 }
 
@@ -54,7 +54,7 @@ void CharacterCreatorState::updateMenu()
 {
     switch (this->getChoice())
     {
-        case 0:
+        case -1:
             this->setQuit(true);
             break;
         case 1:

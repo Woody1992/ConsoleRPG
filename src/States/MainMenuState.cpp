@@ -32,9 +32,10 @@ void MainMenuState::printMenu()
     else
         std::cout << "No character selected."<< "\n";
 
-    std::cout << "(0) Quit" << "\n"
+    std::cout << "(-1) Quit" << "\n"
               << "(1) Start Game" << "\n"
-              << "(2) Create character" << "\n" << "\n";
+              << "(2) Create character" << "\n"
+              << "(3) Select character" << "\n" << "\n";
 }
 
 
@@ -42,7 +43,7 @@ void MainMenuState::updateMenu()
 {
     switch (this->getChoice())
     {
-        case 0:
+        case -1:
             this->setQuit(true);
             break;
         case 1:
@@ -53,6 +54,9 @@ void MainMenuState::updateMenu()
             break;
         case 2:
             this->states->push(new CharacterCreatorState(this->characterList, this->activeCharacter, this->states));
+            break;
+        case 3:
+            this->states->push(new CharacterSelectorState(this->characterList, this->activeCharacter, this->states));
             break;
         default:
             std::cout << "Not valid option"<< "\n";

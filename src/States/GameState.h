@@ -13,6 +13,7 @@
 #include "State.h"
 #include "../Character.h"
 #include "CharacterMenuState.h"
+#include "TravelMenuState.h"
 
 
 class GameState :

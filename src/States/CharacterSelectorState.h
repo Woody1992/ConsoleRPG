@@ -2,30 +2,34 @@
 // Created by Vadik on 06.04.2021.
 //
 
-#ifndef RPG_MAINMENUSTATE_H
-#define RPG_MAINMENUSTATE_H
-#include <vector>
-#include <iostream>
-#include <iomanip>
-#include <stack>
-#include "CharacterCreatorState.h"
-#include "CharacterSelectorState.h"
-#include "GameState.h"
+#ifndef RPG_CHARACTERSELECTORSTATE_H
+#define RPG_CHARACTERSELECTORSTATE_H
 
-class MainMenuState: public State
+#include<iostream>
+#include<iomanip>
+#include<stack>
+#include<vector>
+
+#include"../Character.h"
+#include "State.h"
+
+class CharacterSelectorState :
+        public State
 {
 private:
     std::vector<Character*>* characterList;
     unsigned& activeCharacter;
     std::stack<State*>* states;
 
-
 public:
-    MainMenuState(
+    CharacterSelectorState(
             std::vector<Character*>* characterList,
             unsigned& activeCharacter,
             std::stack<State*>* states);
-    virtual ~MainMenuState();
+
+    virtual ~CharacterSelectorState();
+
+    //Functions
 
     void printMenu();
     void updateMenu();
@@ -33,4 +37,4 @@ public:
 };
 
 
-#endif //RPG_MAINMENUSTATE_H
+#endif //RPG_CHARACTERSELECTORSTATE_H

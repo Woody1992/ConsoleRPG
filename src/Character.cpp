@@ -32,6 +32,9 @@ void Character::updateSkills()
 // Constructors and Destructors
 Character::Character(std::string name)
 {
+    this->x = 0;
+    this->y = 0;
+
     this->name = name;
     this->level = 1;
     this->exp = 1000;
@@ -56,6 +59,30 @@ Character::~Character()
 
 
 // Functions
+
+void Character::setPosition(const unsigned x, const unsigned y)
+{
+    this->x = x;
+    this->y = y;
+}
+
+void Character::move(const int x, const int y)
+{
+    if (static_cast<int>(this->x) + x < 0)
+        this->x = 0;
+    else
+        this->x += x;
+
+    if (static_cast<int>(this->y) + y < 0)
+        this->y = 0;
+    else
+        this->y += y;
+}
+
+void Character::addExp(const unsigned exp)
+{
+    this->exp += exp;
+}
 
 bool Character::canLevelUp()
 {
@@ -113,6 +140,15 @@ const std::string Character::toString() // set variables in strings
        << "Magic Find: " << this->magicFind << "\n"
 
        << "Gold: " << this->gold << "\n";
+    return ss.str();
+}
+
+const std::string Character::toStringPosition()
+{
+    std::stringstream ss;
+
+    ss << "x: " << this->x << " y: " << this->y << "\n";
+
     return ss.str();
 }
 
