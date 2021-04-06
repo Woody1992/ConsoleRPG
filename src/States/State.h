@@ -6,6 +6,9 @@
 #define CONSOLERPG_STATE_H
 
 
+#include<iostream>
+#include<iomanip>
+
 class State
 {
 private:
@@ -22,6 +25,7 @@ public:
     // Modifiers
     void setQuit(const bool quit);
     // Functions
+    virtual int getChoice() const;
     virtual void update() = 0; //Virtual funk(Abstract class)
 };
 

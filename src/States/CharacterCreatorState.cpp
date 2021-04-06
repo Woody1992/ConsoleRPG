@@ -4,9 +4,12 @@
 
 #include "CharacterCreatorState.h"
 
-CharacterCreatorState::CharacterCreatorState(Character*& character, std::stack<State*>*states)
-                                        : character(character), State()
+CharacterCreatorState::CharacterCreatorState(
+        std::vector<Character*>* characterList,
+        unsigned& activeCharacter,std::stack<State*>*states)
+        :State(), activeCharacter(activeCharacter), maxCharacters(5)
 {
+    this->characterList = characterList;
 
     this->states = states;
 }
@@ -18,35 +21,34 @@ CharacterCreatorState::~CharacterCreatorState()
 //Functions
 void CharacterCreatorState::createCharacter()
 {
-    std::string name = "";
+    if (this->characterList->size() < this->maxCharacters)
+    {
+        std::string name = "";
+        std::string bio = "";
 
-    std::cout << "Name:";
-    std::getline(std::cin, name);
+        std::cout << " Name: ";
+        getline(std::cin, name);
 
-    delete this->character;
-    this->character = new Character(name);
 
-    std::cout << "Character " << name << " created" <<"\n";
+        this->characterList->push_back(new Character(name));
+
+        std::cout << " Character " << name << " created." << "\n" << "\n";
+    }
+    else
+    {
+        std::cout << " Max number of characters reached!" << "\n";
+    }
 
 }
 
 void CharacterCreatorState::printMenu()
 {
-    std::cout << "---Character Creater---" << "\n" << "\n"
-              << "(0) Back to menu" << "\n"
-              << "(1) New Character" << "\n" << "\n";
+    std::cout << " --- Character Creator ---" << "\n" << "\n"
+         << " Characters: " << std::to_string(this->characterList->size()) << " / " << std::to_string(this->maxCharacters) << "\n" << "\n"
+         << " (0) Back to menu" << "\n"
+         << " (1) New Character" << "\n" << "\n";
 }
 
-const int CharacterCreatorState::getChoice() const {
-    int choice = 0;
-    std::cout << "Enter choice:";
-    std::cin >> choice;
-
-    std::cin.ignore();
-    std::cin.clear();
-
-    return choice;
-}
 
 void CharacterCreatorState::updateMenu()
 {

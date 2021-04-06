@@ -29,7 +29,6 @@ public:
     //Functions
 
     void printMenu() const;
-    const int getChoice() const;
     void updateMenu();
     virtual void update();
 };

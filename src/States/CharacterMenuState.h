@@ -24,7 +24,7 @@ public:
 
     //Functions
     void printMenu();
-    const int getChoice() const;
+
     void updateMenu();
     void update();
 };

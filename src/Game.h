@@ -17,7 +17,8 @@ class Game
 private:
     bool quit;
 
-    Character* character;
+    unsigned activeCharacter;
+    std::vector<Character*> characterList;
     std::stack<State*> states;
 
 public:

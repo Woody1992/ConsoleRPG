@@ -7,19 +7,22 @@ Game::Game()
 {
     quit = false;
 
-    this->character = nullptr;
-
-    this->states.push(new MainMenuState(this->character, &this->states));
+    this->activeCharacter = 0;
+    this->states.push(new MainMenuState(&this->characterList, this->activeCharacter, &this->states));
 }
 
 Game::~Game()
 {
-    delete this->character;
+
 
     while (!this->states.empty())
     {
         delete this->states.top();
         this->states.pop();
+    }
+    for (size_t i = 0; i < this->characterList.size(); i++)
+    {
+        delete this->characterList[i];
     }
 }
 

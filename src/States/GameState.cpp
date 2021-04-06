@@ -36,16 +36,6 @@ void GameState::updateMenu()
     }
 }
 
-const int GameState::getChoice() const {
-    int choice = 0;
-    std::cout << "Enter choice:";
-    std::cin >> choice;
-
-    std::cin.ignore();
-    std::cin.clear();
-
-    return choice;
-}
 
 void GameState::printMenu() const
 {

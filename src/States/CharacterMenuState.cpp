@@ -27,17 +27,6 @@ void CharacterMenuState::printMenu()
             << "(4) Assign skill points" << "\n" << "\n";
 }
 
-const int CharacterMenuState::getChoice() const {
-    int choice = 0;
-    std::cout << "Enter choice:";
-    std::cin >> choice;
-
-    std::cin.ignore();
-    std::cin.clear();
-
-    return choice;
-}
-
 void CharacterMenuState::updateMenu()
 {
     switch (this->getChoice())

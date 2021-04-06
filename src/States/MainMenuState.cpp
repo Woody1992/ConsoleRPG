@@ -4,10 +4,13 @@
 
 #include "MainMenuState.h"
 
-MainMenuState::MainMenuState(Character*& character, std::stack<State*>*states)
-                : character(character), State()
+MainMenuState::MainMenuState(
+        std::vector<Character*>* characterList,
+        unsigned& activeCharacter,
+        std::stack<State*>* states)
+        : State(), activeCharacter(activeCharacter)
 {
-
+    this->characterList = characterList;
     this->states = states;
 }
 
@@ -22,21 +25,18 @@ MainMenuState::~MainMenuState()
 void MainMenuState::printMenu()
 {
 
-    std::cout << "---Main Menu---" << "\n" << "\n"
-              << "(0) Quit" << "\n"
+    std::cout << "---Main Menu---" << "\n" << "\n";
+
+    if (!this->characterList->empty())
+        std::cout << this->characterList->at(this->activeCharacter)->getMenuBar()<< "\n";
+    else
+        std::cout << "No character selected."<< "\n";
+
+    std::cout << "(0) Quit" << "\n"
               << "(1) Start Game" << "\n"
               << "(2) Create character" << "\n" << "\n";
 }
 
-const int MainMenuState::getChoice() const {
-    int choice = 0;
-    std::cout << "Enter choice:";
-    std::cin >> choice;
-
-    std::cin.ignore();
-    std::cin.clear();
-    return choice;
-}
 
 void MainMenuState::updateMenu()
 {
@@ -46,13 +46,13 @@ void MainMenuState::updateMenu()
             this->setQuit(true);
             break;
         case 1:
-            if(this->character != nullptr)
-                this->states->push(new GameState(this->character, this->states));
+            if (!this->characterList->empty())
+                this->states->push(new GameState(this->characterList->at(this->activeCharacter), this->states));
             else
                 std::cout << "Create a Character first" << "\n";
             break;
         case 2:
-            this->states->push(new CharacterCreatorState(this->character, this->states));
+            this->states->push(new CharacterCreatorState(this->characterList, this->activeCharacter, this->states));
             break;
         default:
             std::cout << "Not valid option"<< "\n";

@@ -14,17 +14,19 @@
 class MainMenuState: public State
 {
 private:
-    Character*& character;
-    std::stack<State*>*states;
-
+    std::vector<Character*>* characterList;
+    unsigned& activeCharacter;
+    std::stack<State*>* states;
 
 
 public:
-    MainMenuState(Character*& character, std::stack<State*>*states);
+    MainMenuState(
+            std::vector<Character*>* characterList,
+            unsigned& activeCharacter,
+            std::stack<State*>* states);
     virtual ~MainMenuState();
 
     void printMenu();
-    const int getChoice() const;
     void updateMenu();
     void update();
 };
