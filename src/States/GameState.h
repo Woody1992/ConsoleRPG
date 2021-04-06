@@ -10,19 +10,20 @@
 #include <fstream>
 #include <iomanip>
 #include <stack>
-#include "../State.h"
+#include "State.h"
 #include "../Character.h"
+#include "CharacterMenuState.h"
 
 
 class GameState :
         public State
 {
 private:
-    Character * character;
+    Character*& character;
     std::stack<State*>*states;
 
 public:
-    GameState(Character* character, std::stack<State*>*states);
+    GameState(Character*& character, std::stack<State*>*states);
     virtual ~GameState();
 
     //Functions

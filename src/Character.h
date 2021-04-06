@@ -58,6 +58,8 @@ public:
     bool canLevelUp();
     const std::string getMenuBar();
     const std::string toString(); // set variables in strings
+    const std::string toStringStats();
+    const std::string toStringMain();
 };
 
 

@@ -7,9 +7,8 @@
 #include <fstream>
 #include <iomanip>
 #include <stack>
-#include "State.h"
-#include "Character.h"
-#include "States/GameState.h"
+#include "States/MainMenuState.h"
+
 
 
 
@@ -17,9 +16,10 @@ class Game
 {
 private:
     bool quit;
-    std::stack<State*> states;
 
     Character* character;
+    std::stack<State*> states;
+
 public:
     Game();
     virtual ~Game();

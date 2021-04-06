@@ -115,3 +115,38 @@ const std::string Character::toString() // set variables in strings
        << "Gold: " << this->gold << "\n";
     return ss.str();
 }
+
+const std::string Character::toStringStats()
+{
+    std::stringstream ss;
+
+    ss << "Strength: " << this->strength << "\n"
+       << "Vitality: " << this->vitality << "\n"
+       << "Agility: " << this->agility << "\n"
+       << "Dexterity: " << this->dexterity << "\n"
+       << "Intelligence: " << this->intelligence << "\n"
+
+       << "Health: " << this->hp << "/" << this->hpMax << "\n"
+       << "Mana: " << this->mana << "/" << this->manaMax << "\n"
+       << "Stamina: " << this->stamina << "/" << this->staminaMax << "\n"
+
+       << "Defence: " << this->defence << "\n"
+       << "Dodge chance: " << this->dodgeChance << "\n"
+       << "Hit rating: " << this->hitRating << "\n"
+       << "Crit chance: " << this->critChance << "\n"
+       << "Magic Find: " << this->magicFind << "\n";
+
+
+    return ss.str();
+}
+
+const std::string Character::toStringMain() {
+    std::stringstream ss;
+
+    ss << "Name: " << this->name << "\n"
+       << "Level: " << this->level << "\n"
+       << "Exp: " << this->exp << "/" << this->expNext << "\n"
+       << "Gold: " << this->gold << "\n";
+    return ss.str();
+
+}

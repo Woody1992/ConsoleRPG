@@ -7,9 +7,9 @@ Game::Game()
 {
     quit = false;
 
-    this->character = new Character("PogSon");
+    this->character = nullptr;
 
-    this->states.push(new GameState(this->character, &this->states));
+    this->states.push(new MainMenuState(this->character, &this->states));
 }
 
 Game::~Game()
