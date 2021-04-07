@@ -10,6 +10,7 @@
 #include <ctime>
 #include "../Character.h"
 #include "State.h"
+#include "CombatState.h"
 
 enum encounters { EMPTY = 0, FARM, CITY, SHOP, CHEST };
 
@@ -30,8 +31,6 @@ public:
     virtual ~TravelMenuState();
 
     //Functions
-    void travel();
-
     void printMenu();
     void updateEncounterMenu();
     void updateMinimap();

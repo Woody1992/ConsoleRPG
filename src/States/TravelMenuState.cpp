@@ -20,28 +20,35 @@ TravelMenuState::~TravelMenuState()
 }
 
 //Functions
-void TravelMenuState::travel()
-{
-    //Move character
-
-    //Get randomly generated location
-
-    //Change player variables
-}
-
 void TravelMenuState::updateEncounterMenu()
 {
     if (!this->getQuit())
     {
         srand(this->character->getSeed());
-        int location = rand() % nrOfLocations;
+        int location = rand() % this->nrOfLocations;
+        this->character->setLocation(location);
 
         switch (location)
         {
-            case FARM:
-                this->locationString = "You are in a farm.";
             case EMPTY:
-                this->locationString = "You are on a empty plane.";
+            {
+                this->locationString = "You are in an empty plane.";
+
+                srand(time(NULL));
+                int randomnr = rand() % 2;
+
+                if (randomnr)
+                {
+                    system("cls");
+                    std::cout << "ENEMY ENCOUTERED!" << "\n";
+                    system("pause");
+
+                    this->states->push(new CombatState(this->character, this->states));
+                }
+                break;
+            }
+            case FARM:
+                this->locationString = "You are on a farm.";
                 break;
             case CITY:
                 this->locationString = "You are in a city.";
@@ -110,11 +117,11 @@ void TravelMenuState::updateMinimap()
             {
                 switch (location)
                 {
-                    case FARM:
-                        ss << "Fa ";
-                        break;
                     case EMPTY:
                         ss << "Em ";
+                        break;
+                    case FARM:
+                        ss << "Fa ";
                         break;
                     case CITY:
                         ss << "Ci ";

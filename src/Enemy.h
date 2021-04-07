@@ -40,5 +40,4 @@ public:
     const std::string toStringStats();
 };
 
-
 #endif //RPG_ENEMY_H

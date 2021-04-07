@@ -4,11 +4,8 @@
 
 #include "Character.h"
 
-
-// Private Functions
 void Character::updateSkills()
 {
-
     this->hpMax = this->vitality * 10;
     this->hp = this->hpMax;
     this->staminaMax=this->agility*2;
@@ -25,9 +22,6 @@ void Character::updateSkills()
     this->critChance=static_cast<float>(this->dexterity)/60;
     this->magicFind=static_cast<float>(this->intelligence)/70;
 
-
-
-
 }
 
 // Constructors and Destructors
@@ -41,6 +35,7 @@ Character::Character(std::string name)
     this->exp = 1000;
     this->expNext =46;
     this->skillPoints = 5;
+    this->location = -1;
 
     this->strength = 1;
     this->vitality = 1;
@@ -58,8 +53,42 @@ Character::~Character()
 
 }
 
-
 // Functions
+
+const std::string Character::flee()
+{
+    std::stringstream ss;
+    int lostExp = rand() % (this->level * 5) + 1;
+    int lostGold = rand() % (this->level * 5) + 1;
+    ss << " Exp lost: " << lostExp << " | " << " Gold lost: " << lostGold;
+
+    this->exp -= lostExp;;
+
+    if (this->exp < 0)
+        this->exp = 0;
+
+    this->gold -= lostGold;
+
+    if (this->gold < 0)
+        this->gold = 0;
+
+    return ss.str();
+}
+
+const int Character::getDamageMin() const
+{
+    return this->damageMin;
+}
+
+const int Character::getDamageMax() const
+{
+    return this->damageMax;
+}
+
+const int Character::getTotalDamage() const
+{
+    return rand() % (this->damageMax - this->damageMin + 1) + this->damageMin;
+}
 
 void Character::setPosition(const unsigned x, const unsigned y)
 {
@@ -67,7 +96,12 @@ void Character::setPosition(const unsigned x, const unsigned y)
     this->y = y;
 }
 
-void Character::move(const int x, const int y)
+void Character::setLocation(const int location)
+{
+    this->location = location;
+}
+
+void Character::move(const int x, const int y) // MOVE
 {
     if (static_cast<int>(this->x) + x < 0)
         this->x = 0;
@@ -80,23 +114,42 @@ void Character::move(const int x, const int y)
         this->y += y;
 }
 
+void Character::resetHP() // REset HP
+{
+    this->hp = this->hpMax;
+}
 
-void Character::setDead()
+void Character::reset() //Reset all STATS
+{
+    this->hp = this->hpMax;
+    this->stamina = this->staminaMax;
+    this->mana = this->manaMax;
+}
+
+void Character::takeDamage(const int damage) //Take DMG
+{
+    this->hp -= damage;
+
+    if (this->hp <= 0)
+        this->setDead();
+}
+
+void Character::setDead() // Player Death
 {
     this->hp = 0;
 
-    this->exp -= rand()% (this->level * 10) + 1;
+    this->exp -= rand()% (this->level * 10) + 1; // EXP lost if died
 
     if (this->exp < 0)
         this->exp = 0;
 
-    this->gold -= rand() % (this->level * 10) + 1;
+    this->gold -= rand() % (this->level * 10) + 1; //GOLD lost if died
 
     if (this->gold < 0)
         this->gold = 0;
 }
 
-void Character::addExp(const unsigned exp)
+void Character::addExp(const unsigned exp) // EXP
 {
     this->exp += exp;
 }
@@ -116,7 +169,7 @@ bool Character::canLevelUp()
     return false;
 }
 
-const std::string Character::getMenuBar()
+const std::string Character::getMenuBar() //Player minibar
 {
     std::stringstream ss;
 
@@ -132,9 +185,7 @@ const std::string Character::getMenuBar()
 
 }
 
-
-
-const std::string Character::toStringPosition()
+const std::string Character::toStringPosition() // Player position on the map
 {
     std::stringstream ss;
 
@@ -143,7 +194,7 @@ const std::string Character::toStringPosition()
     return ss.str();
 }
 
-const std::string Character::toStringStats()
+const std::string Character::toStringStats() // Character Stats
 {
     std::stringstream ss;
 
@@ -168,7 +219,8 @@ const std::string Character::toStringStats()
     return ss.str();
 }
 
-const std::string Character::toStringMain() {
+const std::string Character::toStringMain() // Character main info
+{
     std::stringstream ss;
 
     ss << "Name: " << this->name << "\n"

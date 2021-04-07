@@ -23,6 +23,7 @@ private:
     int exp;
     int expNext;
     int skillPoints;
+    int location;
 
 
     //Stars
@@ -69,8 +70,10 @@ public:
     inline const int getStamina() const { return this->stamina; }
     const int getDamageMin() const;
     const int getDamageMax() const;
+    const int getTotalDamage() const;
     inline const int getDefence() const { return this->defence; }
     inline const int getHitRating() const { return this->hitRating; }
+    inline const int getLocation() const { return this->location; }
 
     //Modifiers
     void setLocation(const int location);
@@ -79,11 +82,14 @@ public:
 
     //Functions
 
+    const std::string flee();
+    void reset();
+    void resetHP();
+    void takeDamage(const int damage);
     void setDead();
     void addExp(const unsigned exp);
     bool canLevelUp();
     const std::string getMenuBar();
-    const std::string toString(); // set variables in strings
     const std::string toStringPosition();
     const std::string toStringStats();
     const std::string toStringMain();

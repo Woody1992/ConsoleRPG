@@ -16,6 +16,18 @@ GameState::~GameState()
 }
 
 //Functions
+void GameState::printMenu() const
+{
+    std::cout
+            << "--- GAME MENU ---" << "\n" << "\n"
+            << this->character->getMenuBar()<< "\n" << "\n"
+            << "(-1) Quit to main menu"<< "\n"
+            << "(1) Character Menu" << "\n"
+            << "(2) Shop menu" << "\n"
+            << "(3) Travel menu" << "\n"
+            << "(4) Rest menu" << "\n" << "\n";
+}
+
 void GameState::updateMenu()
 {
     switch (this->getChoice())
@@ -33,10 +45,16 @@ void GameState::updateMenu()
             this->states->push(new TravelMenuState(this->character, this->states));
             break;
         case 4:
-
-            break;
-        case 5:
-            this->combatTest(); // REMOVE LATER
+            if (this->character->getLocation() == CITY)
+            {
+                this->character->reset();
+                std::cout << "You have rested..." << "\n";
+            }
+            else
+            {
+                std::cout << "You need to be in a city to rest!" << "\n";
+            }
+            system("pause");
             break;
         default:
             std::cout << "--- Wrong Option --- " << "\n";
@@ -44,45 +62,9 @@ void GameState::updateMenu()
     }
 }
 
-
-void GameState::printMenu() const
-{
-
-
-    std::cout
-            << "--- GAME MENU ---" << "\n" << "\n"
-            << this->character->getMenuBar()<< "\n" << "\n"
-            << "(-1) Quit to main menu"<< "\n"
-            << "(1) Character Menu" << "\n"
-            << "(2) Shop menu" << "\n"
-            << "(3) Travel menu" << "\n"
-            << "(5) Combat TEST" << "\n"
-            << "(4) Rest menu" << "\n" << "\n";
-
-}
-
-
 void GameState::update()
 {
     this->printMenu();
 
     this->updateMenu();
-}
-
-void GameState::combatTest() //REMOVE LATER
-{
-    Enemy enemy(this->character->getLevel());
-    bool end_combat = false;
-
-    while(!end_combat)
-    {
-        if (this->character->isDead())
-        {
-            end_combat = true;
-        }
-        else if (enemy.isDead())
-        {
-            end_combat = true;
-        }
-    }
 }
