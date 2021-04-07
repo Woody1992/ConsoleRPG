@@ -17,10 +17,11 @@ void Character::updateSkills()
     this->mana=this->manaMax;
 
 
+    this->damageMin = this->strength * 2;
+    this->damageMax = this->strength / 2 + this->strength * 2;
 
-    this->defence= this->agility;
-    this->dodgeChance= static_cast<float>(this->agility)/50;
-    this->hitRating=this->dexterity * 2;
+    this->defence= this->agility*2;
+    this->hitRating=this->dexterity * 2.5;
     this->critChance=static_cast<float>(this->dexterity)/60;
     this->magicFind=static_cast<float>(this->intelligence)/70;
 
@@ -39,7 +40,7 @@ Character::Character(std::string name)
     this->level = 1;
     this->exp = 1000;
     this->expNext =46;
-    this->skillPoints = 0;
+    this->skillPoints = 5;
 
     this->strength = 1;
     this->vitality = 1;
@@ -79,6 +80,22 @@ void Character::move(const int x, const int y)
         this->y += y;
 }
 
+
+void Character::setDead()
+{
+    this->hp = 0;
+
+    this->exp -= rand()% (this->level * 10) + 1;
+
+    if (this->exp < 0)
+        this->exp = 0;
+
+    this->gold -= rand() % (this->level * 10) + 1;
+
+    if (this->gold < 0)
+        this->gold = 0;
+}
+
 void Character::addExp(const unsigned exp)
 {
     this->exp += exp;
@@ -105,43 +122,17 @@ const std::string Character::getMenuBar()
 
     ss
         << "Name: " << this->name << " |"
-        << " Level: " << this->level << " |"
-        << " Exp: " << this->exp << "/"<< this->expNext << " |"
-        << " Health: " << this->hp << "/" << this->hpMax << " |"
-        << " Stamina: " << this->stamina << "/" << this->staminaMax << "\n"
-        << "Skill points available: " << this->skillPoints;
+        << "Level: " << this->level << " |"
+        << "Exp: " << this->exp << "/"<< this->expNext << " |"
+        << "Health: " << this->hp << "/" << this->hpMax << " |"
+        << "Stamina: " << this->stamina << "/" << this->staminaMax << "\n"
+        << "Skill points available: " << this->skillPoints << "\n";
 
     return ss.str();
 
 }
 
-const std::string Character::toString() // set variables in strings
-{
-    std::stringstream ss;
 
-    ss << "Name: " << this->name << "\n"
-       << "Level: " << this->level << "\n"
-       << "Exp: " << this->exp << "/" << this->expNext << "\n"
-
-       << "Strength: " << this->strength << "\n"
-       << "Vitality: " << this->vitality << "\n"
-       << "Agility: " << this->agility << "\n"
-       << "Dexterity: " << this->dexterity << "\n"
-       << "Intelligence: " << this->intelligence << "\n"
-
-       << "Health: " << this->hp << "/" << this->hpMax << "\n"
-       << "Mana: " << this->mana << "/" << this->manaMax << "\n"
-       << "Stamina: " << this->stamina << "/" << this->staminaMax << "\n"
-
-       << "Defence: " << this->defence << "\n"
-       << "Dodge chance: " << this->dodgeChance << "\n"
-       << "Hit rating: " << this->hitRating << "\n"
-       << "Crit chance: " << this->critChance << "\n"
-       << "Magic Find: " << this->magicFind << "\n"
-
-       << "Gold: " << this->gold << "\n";
-    return ss.str();
-}
 
 const std::string Character::toStringPosition()
 {
@@ -166,8 +157,9 @@ const std::string Character::toStringStats()
        << "Mana: " << this->mana << "/" << this->manaMax << "\n"
        << "Stamina: " << this->stamina << "/" << this->staminaMax << "\n"
 
+
+       << "Damage: " << this->damageMin << "-" << this->damageMax << "\n"
        << "Defence: " << this->defence << "\n"
-       << "Dodge chance: " << this->dodgeChance << "\n"
        << "Hit rating: " << this->hitRating << "\n"
        << "Crit chance: " << this->critChance << "\n"
        << "Magic Find: " << this->magicFind << "\n";

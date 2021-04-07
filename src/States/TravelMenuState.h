@@ -19,7 +19,7 @@ class TravelMenuState :
 private:
     Character *& character;
     std::stack<State*>*states;
-    std::string locationString;
+    std::string locationString; //Keeps track of where the player is
     std::string minimapString;
     int nrOfLocations;
 
@@ -34,6 +34,7 @@ public:
 
     void printMenu();
     void updateEncounterMenu();
+    void updateMinimap();
     void updateMenu();
     void update();
 };

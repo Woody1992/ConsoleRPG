@@ -14,6 +14,7 @@
 #include "../Character.h"
 #include "CharacterMenuState.h"
 #include "TravelMenuState.h"
+#include "../Enemy.h"
 
 
 class GameState :
@@ -28,7 +29,7 @@ public:
     virtual ~GameState();
 
     //Functions
-
+    void combatTest(); // REMOVE LATER
     void printMenu() const;
     void updateMenu();
     virtual void update();

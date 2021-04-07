@@ -40,8 +40,9 @@ private:
     int dexterity; // ловкость
     int intelligence;
 
+    int damageMin;
+    int damageMax;
     int defence;
-    float dodgeChance;
     float hitRating;
     float critChance;
     float magicFind;
@@ -58,7 +59,18 @@ public:
     virtual ~Character();
 
     //Accessors
-    inline const unsigned getSeed() const { return this->x + this->y; };
+    inline const unsigned getSeed() const { return this->x + this->y; }
+    inline const unsigned getX() const { return this->x; }
+    inline const unsigned getY() const { return this->y; }
+    inline const int getLevel() const { return this->level; }
+    inline const bool isDead() const { return this->hp <= 0; }
+    inline const int getHP() const { return this->hp; }
+    inline const int getHPMax() const { return this->hpMax; }
+    inline const int getStamina() const { return this->stamina; }
+    const int getDamageMin() const;
+    const int getDamageMax() const;
+    inline const int getDefence() const { return this->defence; }
+    inline const int getHitRating() const { return this->hitRating; }
 
     //Modifiers
     void setLocation(const int location);
@@ -66,6 +78,8 @@ public:
     void move(const int x, const int y);
 
     //Functions
+
+    void setDead();
     void addExp(const unsigned exp);
     bool canLevelUp();
     const std::string getMenuBar();

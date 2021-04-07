@@ -24,29 +24,29 @@ void CharacterCreatorState::createCharacter()
     if (this->characterList->size() < this->maxCharacters)
     {
         std::string name = "";
-        std::string bio = "";
 
-        std::cout << " Name: ";
+
+        std::cout << "Name: ";
         getline(std::cin, name);
 
 
         this->characterList->push_back(new Character(name));
 
-        std::cout << " Character " << name << " created." << "\n" << "\n";
+        std::cout << "Character " << name << " created." << "\n" << "\n";
     }
     else
     {
-        std::cout << " Max number of characters reached!" << "\n";
+        std::cout << "Max number of characters reached!" << "\n";
     }
 
 }
 
 void CharacterCreatorState::printMenu()
 {
-    std::cout << " --- Character Creator ---" << "\n" << "\n"
-         << " Characters: " << std::to_string(this->characterList->size()) << " / " << std::to_string(this->maxCharacters) << "\n" << "\n"
-         << " (-1) Back to menu" << "\n"
-         << " (1) New Character" << "\n" << "\n";
+    std::cout << "--- Character Creator ---" << "\n" << "\n"
+         << "Characters: " << std::to_string(this->characterList->size()) << " / " << std::to_string(this->maxCharacters) << "\n" << "\n"
+         << "(-1) Back to menu" << "\n"
+         << "(1) New Character" << "\n" << "\n";
 }
 
 
@@ -61,7 +61,7 @@ void CharacterCreatorState::updateMenu()
             this->createCharacter();
             break;
         default:
-            std::cout << "Not valid option"<< "\n";
+            std::cout <<"Not valid option"<< "\n";
             break;
     }
 }

@@ -43,15 +43,15 @@ void CharacterMenuState::updateMenu()
         case 3:
             if (this->character->canLevelUp())
             {
-                std::cout << "LEVEL UP" << "\n";
+                std::cout <<"========LEVEL UP========" << "\n";
             } else
-                std::cout << "Need more EXP" << "\n";
+                std::cout <<"--------Need more EXP--------" << "\n";
             break;
         case 4:
 
             break;
         default:
-            std::cout << "Not valid option"<< "\n";
+            std::cout <<"Not valid option"<< "\n";
             break;
     }
 }

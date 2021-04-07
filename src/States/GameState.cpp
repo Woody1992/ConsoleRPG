@@ -24,7 +24,6 @@ void GameState::updateMenu()
             this->setQuit(true);
             break;
         case 1:
-            std::cout << " --- Character Stats --- " << "\n";
             this->states->push(new CharacterMenuState(this->character, this->states));
             break;
         case 2:
@@ -33,8 +32,14 @@ void GameState::updateMenu()
         case 3:
             this->states->push(new TravelMenuState(this->character, this->states));
             break;
+        case 4:
+
+            break;
+        case 5:
+            this->combatTest(); // REMOVE LATER
+            break;
         default:
-            std::cout << " --- Wrong Option --- " << "\n";
+            std::cout << "--- Wrong Option --- " << "\n";
             break;
     }
 }
@@ -51,6 +56,7 @@ void GameState::printMenu() const
             << "(1) Character Menu" << "\n"
             << "(2) Shop menu" << "\n"
             << "(3) Travel menu" << "\n"
+            << "(5) Combat TEST" << "\n"
             << "(4) Rest menu" << "\n" << "\n";
 
 }
@@ -61,4 +67,22 @@ void GameState::update()
     this->printMenu();
 
     this->updateMenu();
+}
+
+void GameState::combatTest() //REMOVE LATER
+{
+    Enemy enemy(this->character->getLevel());
+    bool end_combat = false;
+
+    while(!end_combat)
+    {
+        if (this->character->isDead())
+        {
+            end_combat = true;
+        }
+        else if (enemy.isDead())
+        {
+            end_combat = true;
+        }
+    }
 }

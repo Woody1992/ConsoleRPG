@@ -30,7 +30,7 @@ void MainMenuState::printMenu()
     if (!this->characterList->empty())
         std::cout << this->characterList->at(this->activeCharacter)->getMenuBar()<< "\n";
     else
-        std::cout << "No character selected."<< "\n";
+        std::cout <<"No character selected."<< "\n";
 
     std::cout << "(-1) Quit" << "\n"
               << "(1) Start Game" << "\n"
