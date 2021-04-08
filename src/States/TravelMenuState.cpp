@@ -3,6 +3,12 @@
 //
 
 #include "TravelMenuState.h"
+#include <conio.h>
+#define KEY_QUIT  113
+#define KEY_UP    119
+#define KEY_LEFT  97
+#define KEY_RIGHT 100
+#define KEY_DOWN  115
 
 TravelMenuState::TravelMenuState(
         Character*& character,
@@ -82,11 +88,16 @@ void TravelMenuState::printMenu()
             << "Minimap: " << "\n" << this->minimapString << "\n";
 
     std::cout
-            << "(-1) Back to menu" << "\n"
-            << "(1) UP" << "\n"
-            << "(2) DOWN" << "\n"
-            << "(3) LEFT" << "\n"
-            << "(4) RIGHT" << "\n" << "\n";
+            << "(Q) << BACK TO MENU" << "\n"
+            << "                       +------------------+" << "\n"
+            << "                       |   (W) MOVE UP    |" << "\n"
+            << "                       +---------+--------+" << "\n"
+            << " +-------------------+           |           +-------------------+" << "\n"
+            << " |  (A) MOVE LEFT    |-----------+-----------|  (D) MOVE RIGHT   |" << "\n"
+            << " +-------------------+           |           +-------------------+" << "\n"
+            << "                       +---------+--------+" << "\n"
+            << "                       |  (S) MOVE DOWN   |" << "\n"
+            << "                       +------------------+" << "\n";
 }
 
 void TravelMenuState::updateMinimap()
@@ -144,21 +155,21 @@ void TravelMenuState::updateMinimap()
 
 void TravelMenuState::updateMenu()
 {
-    switch (this->getChoice())
+    switch (_getch())
     {
-        case -1:
+        case KEY_QUIT:
             this->setQuit(true);
             break;
-        case 1:
+        case KEY_UP:
             this->character->move(0, -1);
             break;
-        case 2:
+        case KEY_DOWN:
             this->character->move(0, 1);
             break;
-        case 3:
+        case KEY_LEFT:
             this->character->move(-1, 0);
             break;
-        case 4:
+        case KEY_RIGHT:
             this->character->move(1, 0);
             break;
         default:

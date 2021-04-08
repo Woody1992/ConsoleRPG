@@ -37,6 +37,8 @@ const bool& Game::getQuit() const
 // Functions
 void Game::update()
 {
+    system("CLS");
+
     this->states.top()->update();
     if (this->states.top()->getQuit())
     {

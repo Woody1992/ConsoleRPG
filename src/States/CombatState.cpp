@@ -3,6 +3,7 @@
 //
 
 #include "CombatState.h"
+#include <stdio.h>
 
 CombatState::CombatState(
         Character*& character,
@@ -19,21 +20,40 @@ CombatState::~CombatState()
 }
 
 //Functions
+
+void CombatState::display(std::string atkStr, std::string defStr, int round, std::string encounterLog, float hitRating, float hitPercent, float defence, float defPercent, Enemy enemy)
+{
+    system("CLS");
+    std::printf("+----------------------+\n");
+    std::printf("| Attacker: %10s |\n", atkStr.c_str());
+    std::printf("| Defender: %10s |\n", defStr.c_str());
+    std::printf("| Round:    %10d |\n", round);
+    std::printf("+----------------------+------------------------+\n");
+    std::printf("| LOG: %-40s |\n", encounterLog.c_str());
+    std::printf("+------------------------+----------------------+\n");
+    std::printf("| Hit rating: %10.1f | Percent: %10.1f%% |\n", hitRating, hitPercent);
+    std::printf("| Defence:    %10.1f | Percent: %10.1f%% |\n", defence, defPercent);
+    std::printf("+------------------------+----------------------+\n");
+    std::printf("| Player Damage: %7d - %-7d              |\n", this->character->getDamageMin(), this->character->getDamageMax());
+    std::printf("| Enemy Damage:  %7d - %-7d              |\n", enemy.getDamageMin(), enemy.getDamageMax());
+    std::printf("| Player HP:     %7d / %-7d              |\n", this->character->getHP(), this->character->getHPMax());
+    std::printf("| Enemy HP:      %7d / %-7d              |\n", enemy.getHP(), enemy.getHPMax());
+    std::printf("+-----------------------------------------------+\n");
+}
+
 void CombatState::beginCombat()
 {
     Enemy enemy(this->character->getLevel());
     bool endCombat = false;
-
     int turn = rand() % 2;
-    int round = 0;
-
+    int round = 1;
     srand(time(nullptr));
-
     while (!endCombat)
     {
         //Test for player attacking and enemy defending
         std::string atkStr = "Player";
         std::string defStr = "Enemy";
+        std::string encounterLog;
         float hitRating = static_cast<float>(this->character->getHitRating());
         float defence = static_cast<float>(enemy.getDefence());
 
@@ -51,12 +71,6 @@ void CombatState::beginCombat()
 
         int random = rand() % 100 + 1;
 
-        std::cout << "-------------------------------------------------" << "\n";
-        std::cout << " Attacker: " << atkStr << "\n";
-        std::cout << " Defender: " << defStr << "\n";
-        std::cout << " Round: " << ++round << "\n";
-        std::cout << "-------------------------------------------------" << "\n";
-
         //Hit
         if (random > 0 && random <= hitPercent)
         {
@@ -73,23 +87,16 @@ void CombatState::beginCombat()
                 this->character->takeDamage(damage);
             }
 
-            std::cout << atkStr << " HIT " << defStr << " FOR " << damage << "!" << "\n";
+            encounterLog = atkStr + " HIT " + defStr + " FOR " + std::to_string(damage) + "!";
         }
         //Defend
         else
         {
-            std::cout << atkStr << " MISSED " << defStr << "\n";
+            encounterLog = atkStr + " MISSED " + defStr;
         }
 
         //Data
-        std::cout << "-------------------------------------------------" << "\n";
-        std::cout << " Hit rating: " << hitRating << " Percent: " << hitPercent << "\n";
-        std::cout << " Defence: " << defence << " Percent: " << defPercent << "\n";
-        std::cout << " Player Damage: " << this->character->getDamageMin() << " - " << this->character->getDamageMax() << "\n";
-        std::cout << " Enemy Damage: " << enemy.getDamageMin() << " - " << enemy.getDamageMax() << "\n";
-        std::cout << " Player HP: " << this->character->getHP() << " / " << this->character->getHPMax() << "\n";
-        std::cout << " Enemy HP: " << enemy.getHP() << " / " << enemy.getHPMax() << "\n";
-        std::cout << "-------------------------------------------------" << "\n";
+        this->display(atkStr, defStr, round, encounterLog, hitRating, hitPercent, defence, defPercent, enemy);
 
         //Loss
         if (this->character->isDead())
@@ -109,8 +116,8 @@ void CombatState::beginCombat()
         }
 
         //Switch turn
-        turn = turn ? 0 : 1;
-
+        turn ^= 1;
+        round++;
         system("pause");
     }
 }
