@@ -29,7 +29,8 @@ public:
                 std::stack<State*>*states);
     virtual ~CombatState();
 
-    //Functions
+	//Functions
+	void display(std::string atkStr, std::string defStr, int round, std::string encounterLog, float hitRating, float hitPercent, float defence, float defPercent, Enemy enemy);
     void beginCombat();
     void printMenu();
     void updateMenu();
