@@ -4,8 +4,10 @@
 
 #include "GameState.h"
 
-GameState::GameState(Character*& character, std::stack<State*>*states):character(character), State()
-{
+GameState::GameState(
+        Character*& character,
+        std::stack<State*>*states)
+        : State(), character(character){
 
     this->states = states;
 }

@@ -14,11 +14,11 @@ void Character::updateSkills()
     this->mana=this->manaMax;
 
 
-    this->damageMin = this->strength * 2;
-    this->damageMax = this->strength / 2 + this->strength * 2;
+    this->damageMin = this->strength * 2 + 3;
+    this->damageMax = this->strength / 2 + this->strength * 2 + 5;
 
     this->defence= this->agility*2;
-    this->hitRating=this->dexterity * 2.5;
+    this->hitRating=this->dexterity * 5;
     this->critChance=static_cast<float>(this->dexterity)/60;
     this->magicFind=static_cast<float>(this->intelligence)/70;
 
@@ -32,7 +32,7 @@ Character::Character(std::string name)
 
     this->name = name;
     this->level = 1;
-    this->exp = 1000;
+    this->exp = 0;
     this->expNext =46;
     this->skillPoints = 5;
     this->location = -1;
@@ -43,9 +43,10 @@ Character::Character(std::string name)
     this->dexterity = 1;
     this->intelligence = 1;
 
-    this->gold = 0;
+    this->gold = 100;
 
     this->updateSkills();
+    this->resetHP();
 }
 
 Character::~Character()
@@ -53,28 +54,7 @@ Character::~Character()
 
 }
 
-// Functions
-
-const std::string Character::flee()
-{
-    std::stringstream ss;
-    int lostExp = rand() % (this->level * 5) + 1;
-    int lostGold = rand() % (this->level * 5) + 1;
-    ss << " Exp lost: " << lostExp << " | " << " Gold lost: " << lostGold;
-
-    this->exp -= lostExp;;
-
-    if (this->exp < 0)
-        this->exp = 0;
-
-    this->gold -= lostGold;
-
-    if (this->gold < 0)
-        this->gold = 0;
-
-    return ss.str();
-}
-
+//Accessors
 const int Character::getDamageMin() const
 {
     return this->damageMin;
@@ -90,6 +70,7 @@ const int Character::getTotalDamage() const
     return rand() % (this->damageMax - this->damageMin + 1) + this->damageMin;
 }
 
+// Functions
 void Character::setPosition(const unsigned x, const unsigned y)
 {
     this->x = x;
@@ -112,6 +93,26 @@ void Character::move(const int x, const int y) // MOVE
         this->y = 0;
     else
         this->y += y;
+}
+
+const std::string Character::flee() // Run from battle
+{
+    std::stringstream ss;
+    int lostExp = rand() % (this->level * 5) + 1;
+    int lostGold = rand() % (this->level * 5) + 1;
+    ss << " Exp lost: " << lostExp << " | " << " Gold lost: " << lostGold;
+
+    this->exp -= lostExp;;
+
+    if (this->exp < 0)
+        this->exp = 0;
+
+    this->gold -= lostGold;
+
+    if (this->gold < 0)
+        this->gold = 0;
+
+    return ss.str();
 }
 
 void Character::resetHP() // REset HP
@@ -149,9 +150,37 @@ void Character::setDead() // Player Death
         this->gold = 0;
 }
 
-void Character::addExp(const unsigned exp) // EXP
+bool Character::addExp(const unsigned exp) // EXP
 {
+    bool levelup = false;
+
     this->exp += exp;
+
+    while (this->exp >= this->expNext)
+    {
+        this->level++;
+        this->exp -= this->expNext;
+        this->expNext = (50 / 3) * (pow(this->level, 3) - 6 * pow(this->level, 2) + (this->level * 17) - 12);
+        this->skillPoints++;
+
+        this->strength += this->level % 2;
+        this->vitality += this->level % 2;
+        this->agility += this->level % 2;
+        this->dexterity += this->level % 2;
+        this->intelligence += this->level % 2;
+
+        levelup = true;
+
+        this->updateSkills();
+        this->resetHP();
+    }
+
+    return levelup;
+}
+
+void Character::addGold(const unsigned gold) // GOLD
+{
+    this->gold += gold;
 }
 
 bool Character::canLevelUp()
@@ -182,7 +211,6 @@ const std::string Character::getMenuBar() //Player minibar
         << "Skill points available: " << this->skillPoints << "\n";
 
     return ss.str();
-
 }
 
 const std::string Character::toStringPosition() // Player position on the map
@@ -215,7 +243,6 @@ const std::string Character::toStringStats() // Character Stats
        << "Crit chance: " << this->critChance << "\n"
        << "Magic Find: " << this->magicFind << "\n";
 
-
     return ss.str();
 }
 
@@ -228,5 +255,4 @@ const std::string Character::toStringMain() // Character main info
        << "Exp: " << this->exp << "/" << this->expNext << "\n"
        << "Gold: " << this->gold << "\n";
     return ss.str();
-
 }

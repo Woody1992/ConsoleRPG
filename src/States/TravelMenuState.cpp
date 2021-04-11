@@ -4,11 +4,6 @@
 
 #include "TravelMenuState.h"
 #include <conio.h>
-#define KEY_QUIT  113
-#define KEY_UP    119
-#define KEY_LEFT  97
-#define KEY_RIGHT 100
-#define KEY_DOWN  115
 
 TravelMenuState::TravelMenuState(
         Character*& character,
@@ -155,21 +150,27 @@ void TravelMenuState::updateMinimap()
 
 void TravelMenuState::updateMenu()
 {
+    
     switch (_getch())
     {
-        case KEY_QUIT:
+        case 'Q':
+        case 'q':
             this->setQuit(true);
             break;
-        case KEY_UP:
+        case 'W':
+        case 'w':
             this->character->move(0, -1);
             break;
-        case KEY_DOWN:
+        case 'S':
+        case 's':
             this->character->move(0, 1);
             break;
-        case KEY_LEFT:
+        case 'A':
+        case 'a':
             this->character->move(-1, 0);
             break;
-        case KEY_RIGHT:
+        case 'D':
+        case 'd':
             this->character->move(1, 0);
             break;
         default:

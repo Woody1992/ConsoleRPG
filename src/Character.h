@@ -87,7 +87,8 @@ public:
     void resetHP();
     void takeDamage(const int damage);
     void setDead();
-    void addExp(const unsigned exp);
+    bool addExp(const unsigned exp);
+    void addGold(const unsigned gold);
     bool canLevelUp();
     const std::string getMenuBar();
     const std::string toStringPosition();

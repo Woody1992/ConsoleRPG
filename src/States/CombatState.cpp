@@ -50,7 +50,6 @@ void CombatState::beginCombat()
     srand(time(nullptr));
     while (!endCombat)
     {
-        //Test for player attacking and enemy defending
         std::string atkStr = "Player";
         std::string defStr = "Enemy";
         std::string encounterLog;
@@ -109,9 +108,12 @@ void CombatState::beginCombat()
         else if (enemy.isDead())
         {
             endCombat = true;
-            int gainedExp = rand() % (enemy.getLevel() * 20) + (enemy.getLevel() * 10);
+            int gainedExp = rand() % (enemy.getLevel() * 30);
+            int gainedGold = rand() % (enemy.getLevel() * 75) ;
             this->character->addExp(gainedExp);
-            std::cout << "YOU DEFEATED THE ENEMY AND GAINED " << gainedExp << " EXP!" << "\n";
+            this->character->addGold(gainedGold);
+            std::cout << "YOU DEFEATED THE ENEMY AND GAINED " << gainedExp << " EXP" <<
+            " AND" << gainedGold << " GOLD" << "\n";
             this->setQuit(true);
         }
 
@@ -140,20 +142,20 @@ void CombatState::updateMenu()
             this->beginCombat();
             std::cout << "END OF COMBAT." << "\n";
             system("pause");
-            //this->setQuit(true);
+            this->setQuit(true);
             break;
 
         case 2:
             std::cout << "You fled and lost some valuables..." << "\n";
             std::cout << this->character->flee() << "\n";
-
             this->setQuit(true);
+            system("pause");
             break;
 
         case 3:
             this->character->reset();
             std::cout << "You have rested..." << "\n";
-
+            system("pause");
             break;
 
         default:
