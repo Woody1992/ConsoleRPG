@@ -9,6 +9,8 @@
 #include<stack>
 #include "../Character.h"
 #include "State.h"
+#include "CharacterStatMenuState.h"
+
 
 
 class CharacterMenuState : public State

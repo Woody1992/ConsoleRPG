@@ -4,7 +4,9 @@
 
 #include "CharacterMenuState.h"
 
-CharacterMenuState::CharacterMenuState(Character*& character, std::stack<State*>* states)
+CharacterMenuState::CharacterMenuState(
+        Character*& character,
+        std::stack<State*>* states)
         : character(character), State()
 {
     this->states = states;
@@ -23,8 +25,8 @@ void CharacterMenuState::printMenu()
             << "(-1) Back to menu" << "\n"
             << "(1) Main info" << "\n"
             << "(2) Stats " << "\n"
-            << "(3) Level Up" << "\n"
-            << "(4) Assign skill points" << "\n" << "\n";
+            << "(3) Assign skill points" << "\n"
+            << "(4) Inventory" << "\n" << "\n";
 }
 
 void CharacterMenuState::updateMenu()
@@ -35,23 +37,25 @@ void CharacterMenuState::updateMenu()
             this->setQuit(true);
             break;
         case 1:
+            system("CLS");
             std::cout << this->character->toStringMain() << "\n";
+            system("pause");
             break;
         case 2:
+            system("CLS");
             std::cout << this->character->toStringStats() << "\n";
+            system("pause");
             break;
         case 3:
-            if (this->character->canLevelUp())
-            {
-                std::cout <<"========LEVEL UP========" << "\n";
-            } else
-                std::cout <<"--------Need more EXP--------" << "\n";
+            this->states->push(new CharacterStatMenuState(this->character, this->states));
             break;
         case 4:
 
             break;
         default:
+            system("CLS");
             std::cout <<"Not valid option"<< "\n";
+            system("pause");
             break;
     }
 }

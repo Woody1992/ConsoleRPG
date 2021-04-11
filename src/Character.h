@@ -10,6 +10,10 @@
 #include <sstream>
 #include <cmath>
 
+#include "Inventory.h"
+
+enum attributes { STRENGTH = 0, VITALITY, AGILITY, DEXTERITY, INTELLIGENCE};
+
 class Character
 {
 private:
@@ -38,7 +42,7 @@ private:
     int strength;
     int vitality;
     int agility;
-    int dexterity; // ловкость
+    int dexterity;
     int intelligence;
 
     int damageMin;
@@ -50,7 +54,10 @@ private:
 
     int gold;
 
-
+    //Weapon
+    Weapon* weapon;
+    //Inventory
+    Inventory inventory;
 
     //Functions
     void updateSkills();
@@ -71,13 +78,15 @@ public:
     const int getDamageMin() const;
     const int getDamageMax() const;
     const int getTotalDamage() const;
+    const int getAttribute(const unsigned attribute);
     inline const int getDefence() const { return this->defence; }
     inline const int getHitRating() const { return this->hitRating; }
     inline const int getLocation() const { return this->location; }
+    Weapon* getWeapon();
 
     //Modifiers
     void setLocation(const int location);
-    void setPosition(const unsigned x, const unsigned y);
+    void setPosition(const unsigned x, const unsigned y); // not used yet
     void move(const int x, const int y);
 
     //Functions
@@ -87,9 +96,10 @@ public:
     void resetHP();
     void takeDamage(const int damage);
     void setDead();
-    void addExp(const unsigned exp);
-    bool canLevelUp();
-    const std::string getMenuBar();
+    bool addExp(const unsigned exp);
+    void addGold(const unsigned gold);
+    bool addStatpoint(const unsigned attribute);
+    const std::string getMenuBar(const bool show_attributes = false);
     const std::string toStringPosition();
     const std::string toStringStats();
     const std::string toStringMain();

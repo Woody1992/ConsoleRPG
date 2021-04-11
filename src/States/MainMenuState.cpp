@@ -67,6 +67,5 @@ void MainMenuState::updateMenu()
 void MainMenuState::update()
 {
     this->printMenu();
-
     this->updateMenu();
 }

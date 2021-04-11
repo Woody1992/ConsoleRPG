@@ -32,8 +32,6 @@ const bool& Game::getQuit() const
     return this->quit;
 }
 
-// Modifier
-
 // Functions
 void Game::update()
 {
