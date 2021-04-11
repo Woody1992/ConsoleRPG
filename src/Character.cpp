@@ -155,7 +155,6 @@ bool Character::addExp(const unsigned exp) // EXP
     bool levelup = false;
 
     this->exp += exp;
-
     while (this->exp >= this->expNext)
     {
         this->level++;
