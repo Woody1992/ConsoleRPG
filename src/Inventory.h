@@ -9,6 +9,7 @@
 #include<string>
 #include "Weapon.h"
 
+
 class Inventory {
 private:
     Item **items; //pointer-pointer to an item inside an array

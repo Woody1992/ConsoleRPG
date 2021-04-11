@@ -44,7 +44,6 @@ Character::Character(std::string name)
     this->intelligence = 1;
 
     this->gold = 100;
-
     this->weapon = new Weapon(2, 4, "Stick", WEAPON, COMMON, 200);
 
     this->updateSkills();
@@ -104,10 +103,12 @@ const int Character::getTotalDamage() const
     return rand() % (this->damageMax - this->damageMin + 1) + this->damageMin;
 }
 
+
 Weapon* Character::getWeapon()
 {
     return this->weapon;
 }
+
 
 // Functions
 void Character::setPosition(const unsigned x, const unsigned y)
@@ -255,6 +256,58 @@ bool Character::addStatpoint(const unsigned attribute)
 
         this->updateSkills();
 
+        this->strength += this->level % 2;
+        this->vitality += this->level % 2;
+        this->agility += this->level % 2;
+        this->dexterity += this->level % 2;
+        this->intelligence += this->level % 2;
+
+        levelup = true;
+
+        this->updateSkills();
+        this->resetHP();
+    }
+
+    return levelup;
+}
+
+void Character::addGold(const unsigned gold) // GOLD
+{
+    this->gold += gold;
+}
+
+bool Character::addStatpoint(const unsigned attribute)
+{
+    if (this->skillPoints > 0)
+    {
+        this->skillPoints--;
+
+        switch (attribute)
+        {
+            case STRENGTH:
+                this->strength++;
+                break;
+            case VITALITY:
+                this->vitality++;
+                break;
+            case AGILITY:
+                this->agility++;
+                break;
+            case DEXTERITY:
+                this->dexterity++;
+                break;
+            case INTELLIGENCE:
+                this->intelligence++;
+                break;
+            default:
+                this->skillPoints++;
+                return false;
+                break;
+        }
+
+        this->updateSkills();
+        this->resetHP();
+
         return true;
     }
 
@@ -276,6 +329,7 @@ const std::string Character::getMenuBar(const bool show_attributes) //Player min
     if (show_attributes)
     {
         ss
+
             << "\n"
             << "Strength: " << this->strength << "\n"
             << "Vitality: " << this->vitality << "\n"
@@ -318,7 +372,6 @@ const std::string Character::toStringStats() // Character Stats
         << "Agility: " << this->agility << "  |  "
         << "Dexterity: " << this->dexterity << "  |  "
         << "Intelligence: " << this->intelligence << "\n";
-
 
 
     return ss.str();

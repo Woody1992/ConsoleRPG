@@ -54,8 +54,10 @@ private:
 
     int gold;
 
+
     //Weapon
     Weapon* weapon;
+
     //Inventory
     Inventory inventory;
 
