@@ -12,7 +12,7 @@ TravelMenuState::TravelMenuState(
 {
     this->states = states;
     this->locationString = "NONE";
-    this->nrOfLocations = 5;
+    this->nrOfLocations = 5; // Number of locations
 }
 
 TravelMenuState::~TravelMenuState()
@@ -186,5 +186,4 @@ void TravelMenuState::update()
     this->printMenu();
     this->updateMenu();
     this->updateEncounterMenu();
-
 }

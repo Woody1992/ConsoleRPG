@@ -113,7 +113,7 @@ void CombatState::beginCombat()
             this->character->addExp(gainedExp);
             this->character->addGold(gainedGold);
             std::cout << "YOU DEFEATED THE ENEMY AND GAINED " << gainedExp << " EXP" <<
-            " AND" << gainedGold << " GOLD" << "\n";
+            " AND " << gainedGold << " GOLD" << "\n";
             this->setQuit(true);
         }
 

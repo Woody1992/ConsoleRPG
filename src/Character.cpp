@@ -155,7 +155,6 @@ bool Character::addExp(const unsigned exp) // EXP
     bool levelup = false;
 
     this->exp += exp;
-
     while (this->exp >= this->expNext)
     {
         this->level++;
@@ -181,21 +180,6 @@ bool Character::addExp(const unsigned exp) // EXP
 void Character::addGold(const unsigned gold) // GOLD
 {
     this->gold += gold;
-}
-
-bool Character::canLevelUp()
-{
-    if (this->exp >= this->expNext)
-    {
-        this->level++;
-        this->exp -= this->expNext;
-        this->expNext = (50 / 3) * (pow(this->level, 3) - 6 * pow(this->level, 2) + (this->level * 17) - 12);
-        this->skillPoints++;
-
-        return true;
-    }
-
-    return false;
 }
 
 const std::string Character::getMenuBar() //Player minibar
