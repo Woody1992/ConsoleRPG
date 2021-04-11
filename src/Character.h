@@ -12,6 +12,8 @@
 
 #include "Inventory.h"
 
+enum attributes { STRENGTH = 0, VITALITY, AGILITY, DEXTERITY, INTELLIGENCE};
+
 class Character
 {
 private:
@@ -74,6 +76,7 @@ public:
     const int getDamageMin() const;
     const int getDamageMax() const;
     const int getTotalDamage() const;
+    const int getAttribute(const unsigned attribute);
     inline const int getDefence() const { return this->defence; }
     inline const int getHitRating() const { return this->hitRating; }
     inline const int getLocation() const { return this->location; }
@@ -92,7 +95,8 @@ public:
     void setDead();
     bool addExp(const unsigned exp);
     void addGold(const unsigned gold);
-    const std::string getMenuBar();
+    bool addStatpoint(const unsigned attribute);
+    const std::string getMenuBar(const bool show_attributes = false);
     const std::string toStringPosition();
     const std::string toStringStats();
     const std::string toStringMain();

@@ -47,7 +47,7 @@ void CharacterMenuState::updateMenu()
             system("pause");
             break;
         case 3:
-
+            this->states->push(new CharacterStatMenuState(this->character, this->states));
             break;
         case 4:
 

@@ -47,6 +47,7 @@ Character::Character(std::string name)
 
     this->updateSkills();
     this->resetHP();
+
 }
 
 Character::~Character()
@@ -55,6 +56,31 @@ Character::~Character()
 }
 
 //Accessors
+const int Character::getAttribute(const unsigned attribute)
+{
+    switch (attribute)
+    {
+        case STRENGTH:
+            return this->strength;
+            break;
+        case VITALITY:
+            return this->vitality;
+            break;
+        case AGILITY:
+            return this->agility;
+            break;
+        case DEXTERITY:
+            return this->dexterity;
+            break;
+        case INTELLIGENCE:
+            return this->intelligence;
+            break;
+        default:
+            return -1;
+            break;
+    }
+}
+
 const int Character::getDamageMin() const
 {
     return this->damageMin;
@@ -115,7 +141,7 @@ const std::string Character::flee() // Run from battle
     return ss.str();
 }
 
-void Character::resetHP() // REset HP
+void Character::resetHP() // Reset HP
 {
     this->hp = this->hpMax;
 }
@@ -155,6 +181,7 @@ bool Character::addExp(const unsigned exp) // EXP
     bool levelup = false;
 
     this->exp += exp;
+
     while (this->exp >= this->expNext)
     {
         this->level++;
@@ -182,7 +209,45 @@ void Character::addGold(const unsigned gold) // GOLD
     this->gold += gold;
 }
 
-const std::string Character::getMenuBar() //Player minibar
+bool Character::addStatpoint(const unsigned attribute)
+{
+    if (this->skillPoints > 0)
+    {
+        this->skillPoints--;
+
+        switch (attribute)
+        {
+            case STRENGTH:
+                this->strength++;
+                break;
+            case VITALITY:
+                this->vitality++;
+                break;
+            case AGILITY:
+                this->agility++;
+                break;
+            case DEXTERITY:
+                this->dexterity++;
+                break;
+            case INTELLIGENCE:
+                this->intelligence++;
+                break;
+            default:
+                this->skillPoints++;
+                return false;
+                break;
+        }
+
+        this->updateSkills();
+        this->resetHP();
+
+        return true;
+    }
+
+    return false;
+}
+
+const std::string Character::getMenuBar(const bool show_attributes) //Player minibar
 {
     std::stringstream ss;
 
@@ -193,6 +258,19 @@ const std::string Character::getMenuBar() //Player minibar
         << "Health: " << this->hp << "/" << this->hpMax << " |"
         << "Stamina: " << this->stamina << "/" << this->staminaMax << "\n"
         << "Skill points available: " << this->skillPoints << "\n";
+
+    if (show_attributes)
+    {
+        ss
+                << "\n"
+                << "Strength: " << this->strength << "\n"
+                << "Vitality: " << this->vitality << "\n"
+                << "Agility: " << this->agility << "\n"
+                << "Dexterity: " << this->dexterity << "\n"
+                << "Intelligence: " << this->intelligence << "\n";
+    }
+
+    ss << "\n";
 
     return ss.str();
 }
