@@ -7,7 +7,8 @@
 
 #include<sstream>
 #include<string>
-#include "Item.h"
+#include "Weapon.h"
+
 
 class Inventory {
 private:

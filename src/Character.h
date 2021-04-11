@@ -54,6 +54,10 @@ private:
 
     int gold;
 
+
+    //Weapon
+    Weapon* weapon;
+
     //Inventory
     Inventory inventory;
 
@@ -80,6 +84,7 @@ public:
     inline const int getDefence() const { return this->defence; }
     inline const int getHitRating() const { return this->hitRating; }
     inline const int getLocation() const { return this->location; }
+    Weapon* getWeapon();
 
     //Modifiers
     void setLocation(const int location);
