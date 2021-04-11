@@ -10,6 +10,8 @@
 #include <sstream>
 #include <cmath>
 
+#include "Inventory.h"
+
 class Character
 {
 private:
@@ -38,7 +40,7 @@ private:
     int strength;
     int vitality;
     int agility;
-    int dexterity; // ловкость
+    int dexterity;
     int intelligence;
 
     int damageMin;
@@ -50,7 +52,8 @@ private:
 
     int gold;
 
-
+    //Inventory
+    Inventory inventory;
 
     //Functions
     void updateSkills();
@@ -77,7 +80,7 @@ public:
 
     //Modifiers
     void setLocation(const int location);
-    void setPosition(const unsigned x, const unsigned y);
+    void setPosition(const unsigned x, const unsigned y); // not used yet
     void move(const int x, const int y);
 
     //Functions
@@ -87,8 +90,8 @@ public:
     void resetHP();
     void takeDamage(const int damage);
     void setDead();
-    void addExp(const unsigned exp);
-    bool canLevelUp();
+    bool addExp(const unsigned exp);
+    void addGold(const unsigned gold);
     const std::string getMenuBar();
     const std::string toStringPosition();
     const std::string toStringStats();

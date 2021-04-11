@@ -6,7 +6,6 @@ int main()
 {
     Game game;
 
-
     // Game loop
     while (!game.getQuit())
     {

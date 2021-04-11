@@ -10,7 +10,6 @@ CharacterCreatorState::CharacterCreatorState(
         :State(), activeCharacter(activeCharacter), maxCharacters(5)
 {
     this->characterList = characterList;
-
     this->states = states;
 }
 CharacterCreatorState::~CharacterCreatorState()
@@ -33,10 +32,12 @@ void CharacterCreatorState::createCharacter()
         this->characterList->push_back(new Character(name));
 
         std::cout << "Character " << name << " created." << "\n" << "\n";
+        system("pause");
     }
     else
     {
         std::cout << "Max number of characters reached!" << "\n";
+        system("pause");
     }
 
 }
@@ -70,7 +71,6 @@ void CharacterCreatorState::updateMenu()
 void CharacterCreatorState::update()
 {
     this->printMenu();
-
     this->updateMenu();
 }
 

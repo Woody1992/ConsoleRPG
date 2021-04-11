@@ -38,7 +38,7 @@ int State::getChoice() const
 
 
         std::cout << "Enter choice:";
-        std::cin >> std::setw(1) >> choice;
+        std::cin >> std::setw(1) >> choice; //reading only first character in line
     }
 
     std::cin.clear();
